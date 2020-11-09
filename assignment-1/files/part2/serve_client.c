@@ -1,13 +1,4 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include <unistd.h>
-#include <pthread.h>
-#include "bst.h"
-#include "bst.c"
-
 pthread_rwlock_t lock = PTHREAD_RWLOCK_INITIALIZER;
-
 
 void* ServeClient(char *clientCommands){
 
@@ -42,35 +33,36 @@ void* ServeClient(char *clientCommands){
 		char* line = input;
 		char *saveptr;
 		char *function, *value;
+		line = strtok(line, "\n");
 		function = strtok_r(line, " ", &saveptr);
-		if(function == "insertNode" || function == "deleteNode") {
-			value = strtok_r(NULL, " ", &saveptr);
+		value = strtok_r(NULL, " ", &saveptr);
+		if(strcmp(function, "insertNode") == 0 || strcmp(function, "deleteNode") == 0) {
 			if(value == NULL) {
 				continue;
 			}
 			int val = atoi(value);
-			if(function == "insertNode") {
+			if(strcmp(function, "insertNode") == 0) {
 				// insert node
 				pthread_rwlock_wrlock(&lock);
-				insertNode(root,val);
+				root=insertNode(root,val);
 				pthread_rwlock_unlock(&lock);
-				printf("[%d]insertNode %d\n",clientCommands,value);
-			} else if(function == "deleteNode") {
+				printf("[%s]insertNode %s\n",clientCommands,value);
+			} else if(strcmp(function, "deleteNode") == 0) {
 				// delete node
 				pthread_rwlock_wrlock(&lock);
-				deleteNode(root,val);
+				root=deleteNode(root,val);
 				pthread_rwlock_unlock(&lock);
-				printf("[%d]deleteNode %d\n",clientCommands,value);
+				printf("[%s]deleteNode %s\n",clientCommands,value);
 			}
-		} else if(function == "countNodes") {
+		} else if(strcmp(function, "countNodes") == 0) {
 			// count nodes
 			pthread_rwlock_rdlock(&lock);
-			countNodes(root);
+			printf("[%s]countNodes = %d\n",clientCommands,countNodes(root));
 			pthread_rwlock_unlock(&lock);
-		} else if(function == "sumSubtree") {
+		} else if(strcmp(function, "sumSubtree") == 0) {
 			// sum nodes
 			pthread_rwlock_rdlock(&lock);
-			sumSubtree(root);
+			printf("[%s]sumSubtree = %d\n",clientCommands,sumSubtree(root));
 			pthread_rwlock_unlock(&lock);
 		}
 	}

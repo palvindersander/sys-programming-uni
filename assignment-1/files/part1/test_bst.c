@@ -12,12 +12,12 @@ int main()
 	root=insertNode(root, 8);
 	printSubtree(root);
 	printf("\n");
-	//printf("%d\n", sumSubtree(root));
+	printf("%d\n", sumSubtree(root));
 	root=deleteNode(root,14);
 	root=deleteNode(root,8);
 	printSubtree(root);
-	//root=freeSubtree(root);
-	//printf("Number of nodes=%d\n", countNodes(root));
+	root=freeSubtree(root);
+	printf("Number of nodes=%d\n", countNodes(root));
 
 	return 0;
 }

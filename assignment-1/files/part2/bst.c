@@ -1,10 +1,9 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include "bst.h"
 
-// Your source code here
 
 Node* insertNode(Node *root, int value) {
 
@@ -98,7 +97,7 @@ void printSubtree(Node *N) {
 
     if(N != NULL) {
         printSubtree(N->left);
-        printf(" %d ", N->data);
+        printf("%d\n", N->data);
         printSubtree(N->right);
     }
 
@@ -117,6 +116,7 @@ int countNodes(Node *N) {
     }
 
     return count;
+
 }
 
 Node* freeSubtree(Node *N) {
@@ -130,6 +130,7 @@ Node* freeSubtree(Node *N) {
     }
 
     return NULL;
+
 }
 
 int sumSubtree(Node *N) {
@@ -145,4 +146,5 @@ int sumSubtree(Node *N) {
     }
 
     return count;
+    
 }
