@@ -33,7 +33,7 @@ void* ServeClient(char *clientCommands){
 		char* line = input;
 		char *saveptr;
 		char *function, *value;
-		line = strtok(line, "\n");
+		line = strtok_r(line, "\n", &saveptr);
 		function = strtok_r(line, " ", &saveptr);
 		value = strtok_r(NULL, " ", &saveptr);
 		if(strcmp(function, "insertNode") == 0 || strcmp(function, "deleteNode") == 0) {
